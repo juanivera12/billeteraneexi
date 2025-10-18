@@ -1,132 +1,170 @@
-# Neexa - Mi Billetera Inteligente
+# Billetera Neexi
 
-Hola! Esta es mi aplicación de finanzas personales que estoy desarrollando. La idea surgió porque necesitaba una herramienta simple pero completa para manejar mis ahorros y entender mejor mis gastos.
+Una aplicación completa de finanzas personales desarrollada con React, TypeScript y Python Flask.
 
-## ¿Qué hace esta app?
+## Características Principales
 
-Básicamente, es como tener un asistente financiero personal que te ayuda a:
+### 💰 Gestión de Presupuestos
+- Presupuestos optimizados automáticamente según mejores prácticas financieras
+- Categorías personalizables con porcentajes recomendados
+- Ajuste dinámico basado en ingresos mensuales
 
-- **Ver tu dinero de un vistazo** - Dashboard simple con todo lo importante
-- **Ahorrar de forma inteligente** - Metas y retos que realmente funcionan
-- **Organizar tu presupuesto** - Sin complicaciones, solo lo esencial
-- **Convertir monedas** - Porque a veces necesitas saber cuánto vale algo en otra moneda
-- **Mantener tus datos seguros** - Login con validación real de contraseñas
-- **Iniciar sesión con Google/Microsoft** - Autenticación OAuth real
-- **Recuperar contraseña por email** - Sistema completo de recuperación
+### 🎯 Sistema de Ahorros
+- Creación y seguimiento de metas de ahorro
+- Progreso visual con barras de avance
+- Contribuciones periódicas y tracking de progreso
 
-## Lo que más me gusta de este proyecto
+### 💱 Conversor de Monedas
+- Conversión en tiempo real entre múltiples monedas
+- API integrada para tipos de cambio actualizados
+- Interfaz intuitiva para cálculos rápidos
 
-- **Es completamente funcional** - No es solo un demo, realmente funciona
-- **Seguridad real** - Las contraseñas tienen validación estricta (símbolos, números, mayúsculas)
-- **OAuth real** - Login con Google y Microsoft usando APIs oficiales
-- **Recuperación de contraseña** - Sistema completo con emails y tokens seguros
-- **Base de datos real** - Los usuarios se guardan y persisten
-- **Se ve bien** - Tanto en modo claro como oscuro
-- **Responsive** - Funciona en móvil y desktop
+### 🔐 Autenticación Segura
+- Sistema de registro e inicio de sesión
+- Integración OAuth con Google y Microsoft
+- Recuperación de contraseñas
+- Tokens JWT para seguridad
 
-## Cómo empezar
+### 🎨 Interfaz Moderna
+- Diseño responsive para todos los dispositivos
+- Modo oscuro optimizado
+- Interfaz limpia sin emojis
+- Componentes reutilizables
+
+## Tecnologías Utilizadas
+
+### Frontend
+- **React 18** - Framework de UI
+- **TypeScript** - Tipado estático
+- **Vite** - Build tool y dev server
+- **Tailwind CSS** - Framework de estilos
+- **React Router** - Navegación
+- **Context API** - Gestión de estado
+
+### Backend
+- **Python Flask** - Framework web
+- **SQLite** - Base de datos
+- **Werkzeug** - Seguridad de contraseñas
+- **Flask-CORS** - Manejo de CORS
+- **JWT** - Autenticación
+
+## Instalación y Configuración
+
+### Prerrequisitos
+- Node.js (v16 o superior)
+- Python (v3.8 o superior)
+- npm o yarn
+
+### Configuración del Frontend
 
 ```bash
-# Instalo las dependencias
+# Instalar dependencias
 npm install
 
-# Arranco el frontend
+# Iniciar servidor de desarrollo
 npm run dev
 ```
 
-El frontend va a correr en http://localhost:3000
+### Configuración del Backend
 
-Para el backend:
 ```bash
+# Navegar al directorio del backend
 cd neexa-backend
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Inicializar base de datos
+python init_db.py
+
+# Iniciar servidor
 python simple_server.py
 ```
 
-El backend va a correr en http://localhost:5000
-
-## Credenciales de prueba
-
-- **Email**: test@example.com
-- **Contraseña**: Test123!
-
-O puedes crear tu propia cuenta - el sistema valida que la contraseña tenga al menos:
-- 8 caracteres
-- Una mayúscula
-- Un número  
-- Un símbolo especial
-
-## Estructura que armé
+## Estructura del Proyecto
 
 ```
-src/
-├── components/          # Componentes principales
-│   ├── ui/             # Componentes base (botones, inputs, etc)
-│   ├── LoginPage.tsx   # Página de login/registro
-│   ├── Header.tsx      # Header con navegación
-│   ├── Dashboard.tsx   # Panel principal
-│   └── ...
-├── contexts/           # Estados globales (autenticación)
-├── services/           # APIs y servicios
-└── assets/            # Imágenes y recursos
+billetera-neexi/
+├── src/                    # Código fuente del frontend
+│   ├── components/         # Componentes React
+│   ├── contexts/          # Contextos de React
+│   ├── services/          # Servicios y APIs
+│   ├── config/            # Configuración
+│   └── assets/            # Imágenes y recursos
+├── neexa-backend/         # Código fuente del backend
+│   ├── app/               # Aplicación Flask
+│   ├── database/          # Esquemas de base de datos
+│   ├── tests/             # Tests unitarios
+│   └── migrations/        # Migraciones de BD
+└── docs/                  # Documentación
 ```
 
-## Lo que aprendí haciendo esto
+## Funcionalidades Detalladas
 
-- **React Context** para manejar el estado de autenticación
-- **Flask + SQLite** para el backend (simple pero efectivo)
-- **Validación de contraseñas** con regex y indicadores visuales
-- **OAuth 2.0** con Google y Microsoft (APIs reales)
-- **Recuperación de contraseña** con tokens seguros y emails
-- **CORS** para conectar frontend y backend
-- **React Router** para manejo de rutas
-- **Tailwind CSS** para estilos rápidos y consistentes
+### Dashboard Principal
+- Resumen financiero personalizado
+- Gráficos de gastos por categoría
+- Alertas y notificaciones
+- Acceso rápido a todas las funciones
 
-## Funcionalidades implementadas
+### Gestión de Presupuestos
+- Creación de presupuestos mensuales
+- Distribución automática por categorías
+- Seguimiento de gastos vs presupuesto
+- Alertas de exceso de gasto
 
-- **Autenticación completa**
-  - Registro e inicio de sesión
-  - Validación de contraseñas con indicadores visuales
-  - Recuperación de contraseña por email
-  - OAuth con Google y Microsoft
+### Sistema de Metas
+- Metas de ahorro personalizadas
+- Plazos flexibles
+- Contribuciones regulares o únicas
+- Celebración de logros
 
-- **Gestión de usuarios**
-  - Base de datos SQLite
-  - Hashing seguro de contraseñas
-  - Tokens de recuperación con expiración
+### Autenticación
+- Registro con validación de email
+- Inicio de sesión seguro
+- Integración OAuth (Google/Microsoft)
+- Recuperación de contraseñas
 
-- **Interfaz de usuario**
-  - Dashboard principal
-  - Gestión de presupuestos
-  - Calculadora de conversión de monedas
-  - Diseño responsive
+## API Endpoints
 
-## Próximos pasos
+### Autenticación
+- `POST /api/auth/register` - Registro de usuarios
+- `POST /api/auth/login` - Inicio de sesión
+- `POST /api/auth/forgot-password` - Recuperar contraseña
+- `POST /api/auth/reset-password` - Resetear contraseña
 
-- [ ] Agregar gráficos de gastos
-- [ ] Notificaciones push
-- [ ] Exportar datos a Excel
-- [ ] Modo offline
-- [ ] Más opciones de monedas
-- [ ] Integración con APIs bancarias
+### Usuarios
+- `GET /api/users/profile` - Perfil del usuario
+- `PUT /api/users/profile` - Actualizar perfil
+- `GET /api/users/stats` - Estadísticas del usuario
 
-## Notas técnicas
+### Presupuestos
+- `GET /api/budgets` - Obtener presupuestos
+- `POST /api/budgets` - Crear presupuesto
+- `PUT /api/budgets/:id` - Actualizar presupuesto
+- `DELETE /api/budgets/:id` - Eliminar presupuesto
 
-El proyecto usa:
-- **Frontend**: React + TypeScript + Vite + Tailwind + React Router
-- **Backend**: Flask + SQLite + CORS
-- **Autenticación**: JWT tokens + OAuth 2.0 (Google/Microsoft)
-- **Base de datos**: SQLite (fácil de usar y mantener)
-- **Email**: Simulado para desarrollo (configurable para producción)
+## Contribución
 
-## Configuración OAuth
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
-Para habilitar el login con Google y Microsoft:
+## Licencia
 
-1. **Google**: Ve a [Google Cloud Console](https://console.cloud.google.com/)
-2. **Microsoft**: Ve a [Azure Portal](https://portal.azure.com/)
-3. Configura las credenciales en `src/config/oauth.ts`
-4. Ver la guía completa en `OAUTH_SETUP_GUIDE.md`
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
----
+## Contacto
 
-*Desarrollado para hacer las finanzas personales más accesibles*
+**Juan Ivera** - [@juanivera12](https://github.com/juanivera12)
+
+Proyecto Link: [https://github.com/juanivera12/billeteraneexi](https://github.com/juanivera12/billeteraneexi)
+
+## Agradecimientos
+
+- React Team por el excelente framework
+- Tailwind CSS por el sistema de diseño
+- Flask por la simplicidad del backend
+- Comunidad open source por las librerías utilizadas
