@@ -36,24 +36,23 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
   const [budgetType, setBudgetType] = useState<'recommended' | 'custom' | null>(null);
   const [monthlyIncome, setMonthlyIncome] = useState(175000);
   const [categories, setCategories] = useState<BudgetCategory[]>([]);
-  const [showResults, setShowResults] = useState(false);
 
-  // Presupuesto recomendado
-  const recommendedBudget: BudgetCategory[] = [
-    { id: '1', name: 'Vivienda', amount: 52500, percentage: 30, color: 'bg-blue-500', icon: '🏠' },
-    { id: '2', name: 'Alimentación', amount: 35000, percentage: 20, color: 'bg-green-500', icon: '🍽️' },
-    { id: '3', name: 'Transporte', amount: 17500, percentage: 10, color: 'bg-yellow-500', icon: '🚗' },
-    { id: '4', name: 'Ahorros', amount: 35000, percentage: 20, color: 'bg-purple-500', icon: '💰' },
-    { id: '5', name: 'Entretenimiento', amount: 14000, percentage: 8, color: 'bg-pink-500', icon: '🎯' },
-    { id: '6', name: 'Servicios', amount: 10500, percentage: 6, color: 'bg-indigo-500', icon: '⚡' },
-    { id: '7', name: 'Emergencias', amount: 10500, percentage: 6, color: 'bg-red-500', icon: '🆘' }
+
+  // Función para calcular el presupuesto recomendado basado en los ingresos
+  const calculateRecommendedBudget = (income: number): BudgetCategory[] => [
+    { id: '1', name: 'Vivienda', amount: Math.round(income * 0.30), percentage: 30, color: 'bg-blue-500', icon: '🏠' },
+    { id: '2', name: 'Alimentación', amount: Math.round(income * 0.20), percentage: 20, color: 'bg-green-500', icon: '🍽️' },
+    { id: '3', name: 'Transporte', amount: Math.round(income * 0.10), percentage: 10, color: 'bg-yellow-500', icon: '🚗' },
+    { id: '4', name: 'Ahorros', amount: Math.round(income * 0.20), percentage: 20, color: 'bg-purple-500', icon: '💰' },
+    { id: '5', name: 'Entretenimiento', amount: Math.round(income * 0.08), percentage: 8, color: 'bg-pink-500', icon: '🎯' },
+    { id: '6', name: 'Servicios', amount: Math.round(income * 0.06), percentage: 6, color: 'bg-indigo-500', icon: '⚡' },
+    { id: '7', name: 'Emergencias', amount: Math.round(income * 0.06), percentage: 6, color: 'bg-red-500', icon: '🆘' }
   ];
 
   const handleSelectBudgetType = (type: 'recommended' | 'custom') => {
     setBudgetType(type);
     if (type === 'recommended') {
-      setCategories(recommendedBudget);
-      setShowResults(true);
+      setCategories(calculateRecommendedBudget(monthlyIncome));
     } else {
       // Inicializar con categorías básicas para customizar
       setCategories([
@@ -62,7 +61,14 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
         { id: '3', name: 'Transporte', amount: 0, percentage: 0, color: 'bg-yellow-500', icon: '🚗' },
         { id: '4', name: 'Ahorros', amount: 0, percentage: 0, color: 'bg-purple-500', icon: '💰' }
       ]);
-      setShowResults(true);
+    }
+  };
+
+  // Función para actualizar los ingresos y recalcular el presupuesto recomendado
+  const handleIncomeChange = (newIncome: number) => {
+    setMonthlyIncome(newIncome);
+    if (budgetType === 'recommended') {
+      setCategories(calculateRecommendedBudget(newIncome));
     }
   };
 
@@ -122,10 +128,10 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
                     <Calculator className="w-10 h-10 text-purple-600" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Presupuesto Recomendado
+                    Presupuesto Optimizado
                   </h3>
                   <p className="text-gray-600 mb-4">
-                    Un presupuesto balanceado basado en mejores prácticas financieras y porcentajes recomendados
+                    Ingresa tus ingresos y obtén un presupuesto balanceado automáticamente según mejores prácticas financieras
                   </p>
                   <div className="space-y-2 mb-6">
                     <Badge className="bg-purple-100 text-purple-700">
@@ -133,14 +139,14 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
                       Optimizado automáticamente
                     </Badge>
                     <div className="text-sm text-purple-600">
+                      ✓ Ingresa tus ingresos y se ajusta automáticamente<br/>
                       ✓ Basado en mejores prácticas financieras<br/>
-                      ✓ Ajustado a tu perfil de ingresos<br/>
                       ✓ Incluye metas de ahorro inteligentes
                     </div>
                   </div>
                   <Button className="w-full bg-purple-600 hover:bg-purple-700">
                     <Calculator className="w-4 h-4 mr-2" />
-                    Usar Recomendado
+                    Usar Optimizado
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </CardContent>
@@ -210,19 +216,19 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b">
           <div className="flex items-center space-x-3">
             <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-              budgetType === 'ai' ? 'bg-purple-100' : 'bg-blue-100'
+              budgetType === 'recommended' ? 'bg-purple-100' : 'bg-blue-100'
             }`}>
-              {budgetType === 'ai' ? 
+              {budgetType === 'recommended' ? 
                 <Brain className="w-6 h-6 text-purple-600" /> : 
                 <User className="w-6 h-6 text-blue-600" />
               }
             </div>
             <div>
               <CardTitle className="text-lg">
-                {budgetType === 'ai' ? 'Presupuesto Optimizado por IA' : 'Presupuesto Personalizado'}
+                {budgetType === 'recommended' ? 'Presupuesto Optimizado' : 'Presupuesto Personalizado'}
               </CardTitle>
               <p className="text-sm text-gray-500">
-                {budgetType === 'ai' ? 'Generado automáticamente según tu perfil' : 'Creado manualmente por ti'}
+                {budgetType === 'recommended' ? 'Generado automáticamente según tu perfil' : 'Creado manualmente por ti'}
               </p>
             </div>
           </div>
@@ -240,18 +246,23 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
                 id="income"
                 type="number"
                 value={monthlyIncome}
-                onChange={(e) => setMonthlyIncome(Number(e.target.value))}
+                onChange={(e) => handleIncomeChange(Number(e.target.value))}
                 className="max-w-xs"
-                disabled={budgetType === 'ai'}
+                placeholder="Ingresa tus ingresos mensuales"
               />
               <span className="text-gray-600">ARS</span>
-              {budgetType === 'ai' && (
+              {budgetType === 'recommended' && (
                 <Badge className="bg-purple-100 text-purple-700">
                   <Sparkles className="w-3 h-3 mr-1" />
-                  Detectado automáticamente
+                  Se ajusta automáticamente
                 </Badge>
               )}
             </div>
+            {budgetType === 'recommended' && (
+              <p className="text-sm text-purple-600 mt-2">
+                Las categorías se actualizan automáticamente según mejores prácticas financieras
+              </p>
+            )}
           </div>
 
           {/* Budget Summary */}
@@ -344,19 +355,13 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
                           value={category.amount}
                           onChange={(e) => updateCategoryAmount(category.id, Number(e.target.value))}
                           className="flex-1"
-                          disabled={budgetType === 'ai'}
+                          disabled={budgetType === 'recommended'}
                         />
                         <span className="text-sm text-gray-600">ARS</span>
                       </div>
                       <Progress value={category.percentage} className="h-2" />
                     </div>
 
-                    {budgetType === 'ai' && (
-                      <div className="mt-3 p-2 bg-purple-50 rounded text-xs text-purple-700">
-                        <Sparkles className="w-3 h-3 inline mr-1" />
-                        IA optimizado según mejores prácticas financieras
-                      </div>
-                    )}
                   </CardContent>
                 </Card>
               ))}
@@ -364,7 +369,7 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
           </div>
 
           {/* AI Recommendations */}
-          {budgetType === 'ai' && (
+          {budgetType === 'recommended' && (
             <Card className="mt-6 bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200">
               <CardContent className="p-4">
                 <h4 className="font-semibold text-purple-900 mb-3 flex items-center">
@@ -373,11 +378,11 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="bg-white p-3 rounded border border-purple-200">
-                    <div className="font-medium text-purple-900">🎯 Optimización Detectada</div>
+                    <div className="font-medium text-purple-900">Optimización Detectada</div>
                     <div className="text-purple-700">Tu presupuesto está optimizado para maximizar ahorros sin afectar calidad de vida.</div>
                   </div>
                   <div className="bg-white p-3 rounded border border-purple-200">
-                    <div className="font-medium text-purple-900">📈 Crecimiento Proyectado</div>
+                    <div className="font-medium text-purple-900">Crecimiento Proyectado</div>
                     <div className="text-purple-700">Con este presupuesto, podrías ahorrar $420,000 al año.</div>
                   </div>
                 </div>
@@ -397,7 +402,7 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
                 Cancelar
               </Button>
               <Button 
-                className={budgetType === 'ai' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-blue-600 hover:bg-blue-700'}
+                className={budgetType === 'recommended' ? 'bg-purple-600 hover:bg-purple-700 dark:bg-blue-600 dark:hover:bg-blue-700' : 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800'}
                 disabled={remaining < 0}
               >
                 <Save className="w-4 h-4 mr-2" />

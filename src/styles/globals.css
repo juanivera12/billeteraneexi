@@ -42,42 +42,44 @@
 }
 
 .dark {
-  --background: oklch(0.09 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.12 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.12 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.95 0 0);
-  --primary-foreground: oklch(0.09 0 0);
-  --secondary: oklch(0.18 0 0);
-  --secondary-foreground: oklch(0.9 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.18 0 0);
-  --accent-foreground: oklch(0.9 0 0);
-  --destructive: oklch(0.55 0.15 25);
-  --destructive-foreground: oklch(0.95 0 0);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.15 0 0);
-  --input-background: oklch(0.15 0 0);
-  --switch-background: oklch(0.3 0 0);
-  --ring: oklch(0.6 0 0);
+  /* Azul oscuro como base */
+  --background: #0f172a; /* slate-900 */
+  --foreground: #f8fafc; /* slate-50 */
+  --card: #1e293b; /* slate-800 */
+  --card-foreground: #f1f5f9; /* slate-100 */
+  --popover: #1e293b; /* slate-800 */
+  --popover-foreground: #f1f5f9; /* slate-100 */
+  --primary: #3b82f6; /* blue-500 */
+  --primary-foreground: #ffffff;
+  --secondary: #334155; /* slate-700 */
+  --secondary-foreground: #e2e8f0; /* slate-200 */
+  --muted: #334155; /* slate-700 */
+  --muted-foreground: #94a3b8; /* slate-400 */
+  --accent: #1e40af; /* blue-800 */
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444; /* red-500 */
+  --destructive-foreground: #ffffff;
+  --border: #334155; /* slate-700 */
+  --input: #334155; /* slate-700 */
+  --input-background: #1e293b; /* slate-800 */
+  --switch-background: #475569; /* slate-600 */
+  --ring: #3b82f6; /* blue-500 */
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --chart-1: oklch(0.65 0.15 260);
-  --chart-2: oklch(0.7 0.12 180);
-  --chart-3: oklch(0.75 0.14 70);
-  --chart-4: oklch(0.6 0.18 300);
-  --chart-5: oklch(0.68 0.16 20);
-  --sidebar: oklch(0.1 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.65 0.15 260);
-  --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.18 0 0);
-  --sidebar-accent-foreground: oklch(0.9 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.6 0 0);
+  /* Colores de gráficos mejorados para modo oscuro */
+  --chart-1: #3b82f6; /* blue-500 */
+  --chart-2: #10b981; /* emerald-500 */
+  --chart-3: #f59e0b; /* amber-500 */
+  --chart-4: #8b5cf6; /* violet-500 */
+  --chart-5: #ef4444; /* red-500 */
+  --sidebar: #0f172a; /* slate-900 */
+  --sidebar-foreground: #f8fafc; /* slate-50 */
+  --sidebar-primary: #3b82f6; /* blue-500 */
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #334155; /* slate-700 */
+  --sidebar-accent-foreground: #e2e8f0; /* slate-200 */
+  --sidebar-border: #334155; /* slate-700 */
+  --sidebar-ring: #3b82f6; /* blue-500 */
 }
 
 @theme inline {

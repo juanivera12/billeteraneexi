@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Badge } from './ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { currencyService, ExchangeRates, CurrencyConversion } from '../services/currencyService';
 import { 
   ArrowLeftRight, 
   Calculator as CalculatorIcon, 
@@ -13,7 +14,12 @@ import {
   Banknote,
   RefreshCw,
   TrendingUp,
-  Clock
+  TrendingDown,
+  Minus,
+  Clock,
+  Star,
+  History,
+  BarChart3
 } from 'lucide-react';
 
 export function ConverterCalculator() {
@@ -24,6 +30,11 @@ export function ConverterCalculator() {
   const [fromCurrency, setFromCurrency] = useState('ARS');
   const [toCurrency, setToCurrency] = useState('USD');
   const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
+  const [isLoadingRates, setIsLoadingRates] = useState(false);
+  const [conversionResult, setConversionResult] = useState<CurrencyConversion | null>(null);
+  const [currencyTrend, setCurrencyTrend] = useState<'up' | 'down' | 'stable'>('stable');
+  const [favoriteCurrencies, setFavoriteCurrencies] = useState<string[]>(['USD', 'EUR']);
   
   // Calculator state
   const [display, setDisplay] = useState('0');
@@ -31,39 +42,51 @@ export function ConverterCalculator() {
   const [operation, setOperation] = useState<string | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState(false);
 
-  // Mock exchange rates (in a real app, these would come from an API)
-  const exchangeRates = {
-    ARS: {
-      USD: 0.0011, // 1 ARS = 0.0011 USD (approximate)
-      EUR: 0.0010, // 1 ARS = 0.0010 EUR (approximate)
-      CLP: 1.08    // 1 ARS = 1.08 CLP (approximate)
+  const currencies = currencyService.currencies;
+
+  const loadExchangeRates = async () => {
+    setIsLoadingRates(true);
+    try {
+      const rates = await currencyService.getExchangeRates('USD');
+      setExchangeRates(rates);
+      setLastUpdated(new Date());
+      
+      // Update conversion result
+      const result = currencyService.convertCurrency(amount, fromCurrency, toCurrency, rates);
+      setConversionResult(result);
+      
+      // Get currency trend
+      const trend = await currencyService.getCurrencyTrend(fromCurrency, toCurrency);
+      setCurrencyTrend(trend);
+    } catch (error) {
+      console.error('Error loading exchange rates:', error);
+    } finally {
+      setIsLoadingRates(false);
     }
   };
 
-  const currencies = [
-    { code: 'ARS', name: 'Peso Argentino', symbol: '$', flag: '🇦🇷' },
-    { code: 'USD', name: 'Dólar Estadounidense', symbol: '$', flag: '🇺🇸' },
-    { code: 'EUR', name: 'Euro', symbol: '€', flag: '🇪🇺' },
-    { code: 'CLP', name: 'Peso Chileno', symbol: '$', flag: '🇨🇱' }
-  ];
-
-  const convertCurrency = (amount: number, from: string, to: string): number => {
-    if (from === to) return amount;
-    if (from === 'ARS') {
-      return amount * (exchangeRates.ARS as any)[to];
-    }
-    // For reverse conversion, divide by the rate
-    if (to === 'ARS') {
-      return amount / (exchangeRates.ARS as any)[from];
-    }
-    // For non-ARS to non-ARS conversion, go through ARS
-    const toARS = amount / (exchangeRates.ARS as any)[from];
-    return toARS * (exchangeRates.ARS as any)[to];
+  const performConversion = () => {
+    const result = currencyService.convertCurrency(amount, fromCurrency, toCurrency, exchangeRates);
+    setConversionResult(result);
   };
 
   const swapCurrencies = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
+  };
+
+  const toggleFavorite = (currencyCode: string) => {
+    setFavoriteCurrencies(prev => {
+      if (prev.includes(currencyCode)) {
+        return prev.filter(code => code !== currencyCode);
+      } else {
+        return [...prev, currencyCode];
+      }
+    });
+  };
+
+  const setQuickAmount = (quickAmount: number) => {
+    setAmount(quickAmount);
   };
 
   // Calculator functions
@@ -142,8 +165,20 @@ export function ConverterCalculator() {
     }
   };
 
+  // Load exchange rates on component mount
   useEffect(() => {
-    // Update timestamp every minute to simulate real-time data
+    loadExchangeRates();
+  }, []);
+
+  // Perform conversion when amount or currencies change
+  useEffect(() => {
+    if (Object.keys(exchangeRates).length > 0) {
+      performConversion();
+    }
+  }, [amount, fromCurrency, toCurrency, exchangeRates]);
+
+  // Update timestamp every minute
+  useEffect(() => {
     const interval = setInterval(() => {
       setLastUpdated(new Date());
     }, 60000);
@@ -197,10 +232,28 @@ export function ConverterCalculator() {
                 <div className="flex items-center space-x-2 text-blue-700">
                   <Clock className="w-4 h-4" />
                   <span className="text-sm">Última actualización: {lastUpdated.toLocaleTimeString()}</span>
+                  {currencyTrend !== 'stable' && (
+                    <div className="flex items-center space-x-1 ml-2">
+                      {currencyTrend === 'up' ? (
+                        <TrendingUp className="w-3 h-3 text-green-600" />
+                      ) : (
+                        <TrendingDown className="w-3 h-3 text-red-600" />
+                      )}
+                      <span className="text-xs">
+                        {currencyTrend === 'up' ? 'Subiendo' : 'Bajando'}
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <Button variant="outline" size="sm" className="text-blue-600 border-blue-300">
-                  <RefreshCw className="w-3 h-3 mr-1" />
-                  Actualizar
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-blue-600 border-blue-300"
+                  onClick={loadExchangeRates}
+                  disabled={isLoadingRates}
+                >
+                  <RefreshCw className={`w-3 h-3 mr-1 ${isLoadingRates ? 'animate-spin' : ''}`} />
+                  {isLoadingRates ? 'Actualizando...' : 'Actualizar'}
                 </Button>
               </div>
 
@@ -275,18 +328,23 @@ export function ConverterCalculator() {
                 <CardContent className="p-6 text-center">
                   <div className="space-y-2">
                     <div className="text-sm text-gray-600">Resultado</div>
-                    <div className="text-3xl font-bold text-purple-600">
-                      {currencies.find(c => c.code === toCurrency)?.symbol}
-                      {convertCurrency(amount, fromCurrency, toCurrency).toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      })} {toCurrency}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      1 {fromCurrency} = 
-                      {currencies.find(c => c.code === toCurrency)?.symbol}
-                      {convertCurrency(1, fromCurrency, toCurrency).toFixed(4)} {toCurrency}
-                    </div>
+                    {conversionResult ? (
+                      <>
+                        <div className="text-3xl font-bold text-purple-600">
+                          {currencyService.formatCurrency(conversionResult.result, toCurrency)}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          1 {fromCurrency} = {currencyService.formatCurrency(conversionResult.rate, toCurrency)}
+                        </div>
+                        <div className="text-xs text-gray-400">
+                          Convertido el {conversionResult.timestamp.toLocaleTimeString()}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-lg text-gray-500">
+                        Ingresa una cantidad para convertir
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -295,25 +353,53 @@ export function ConverterCalculator() {
               <div className="grid grid-cols-3 gap-3">
                 <Button 
                   variant="outline" 
-                  onClick={() => setAmount(1000)}
+                  onClick={() => setQuickAmount(1000)}
                   className="flex items-center space-x-1"
                 >
-                  <span>$1.000</span>
+                  <span>{currencyService.formatCurrency(1000, fromCurrency)}</span>
                 </Button>
                 <Button 
                   variant="outline" 
-                  onClick={() => setAmount(10000)}
+                  onClick={() => setQuickAmount(10000)}
                   className="flex items-center space-x-1"
                 >
-                  <span>$10.000</span>
+                  <span>{currencyService.formatCurrency(10000, fromCurrency)}</span>
                 </Button>
                 <Button 
                   variant="outline" 
-                  onClick={() => setAmount(100000)}
+                  onClick={() => setQuickAmount(100000)}
                   className="flex items-center space-x-1"
                 >
-                  <span>$100.000</span>
+                  <span>{currencyService.formatCurrency(100000, fromCurrency)}</span>
                 </Button>
+              </div>
+
+              {/* Favorite Currencies */}
+              <div className="space-y-2">
+                <Label>Conversiones Rápidas</Label>
+                <div className="flex flex-wrap gap-2">
+                  {favoriteCurrencies.map(currencyCode => (
+                    <Button
+                      key={currencyCode}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setToCurrency(currencyCode)}
+                      className={`flex items-center space-x-1 ${
+                        toCurrency === currencyCode ? 'bg-purple-100 border-purple-300' : ''
+                      }`}
+                    >
+                      <span>{currencies.find(c => c.code === currencyCode)?.flag}</span>
+                      <span>{currencyCode}</span>
+                      <Star 
+                        className="w-3 h-3 text-yellow-500 fill-current" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(currencyCode);
+                        }}
+                      />
+                    </Button>
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>

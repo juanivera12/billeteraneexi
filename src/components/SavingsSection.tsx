@@ -22,7 +22,6 @@ import {
   Settings,
   Calculator
 } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface CustomChallenge {
   id: string;
@@ -123,17 +122,17 @@ export function SavingsSection() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="text-center">
-        <h1 className="text-4xl font-semibold text-foreground mb-2">Centro de Ahorros Neexa</h1>
-        <p className="text-muted-foreground mb-4">Tu herramienta completa para alcanzar todas tus metas financieras</p>
-        <div className="flex justify-center items-center space-x-2 text-purple-600">
+      <div className="text-center bg-white dark:bg-slate-100 p-8 rounded-lg border border-gray-200 dark:border-gray-300">
+        <h1 className="text-4xl font-semibold text-gray-900 dark:text-gray-900 mb-2">Centro de Ahorros Neexa</h1>
+        <p className="text-gray-600 dark:text-gray-700 mb-4">Tu herramienta completa para alcanzar todas tus metas financieras</p>
+        <div className="flex justify-center items-center space-x-2 text-purple-600 dark:text-blue-600">
           <PiggyBank className="w-5 h-5" />
           <span className="font-medium">Gestiona tus ahorros de manera inteligente</span>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex flex-wrap justify-center gap-2 bg-card p-3 rounded-xl border shadow-sm">
+      <div className="flex flex-wrap justify-center gap-2 bg-white dark:bg-slate-100 p-3 rounded-xl border border-gray-200 dark:border-gray-300 shadow-sm">
         <Button
           variant={activeTab === 'goals' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('goals')}
@@ -172,31 +171,31 @@ export function SavingsSection() {
       {activeTab === 'goals' && (
         <div className="space-y-6">
           {/* AI Savings Overview */}
-          <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+          <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-700">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-foreground flex items-center">
-                  <Sparkles className="w-5 h-5 text-green-600 mr-2" />
+                  <Sparkles className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
                   Resumen Inteligente de Ahorros
                 </h3>
-                <Badge className="bg-green-100 text-green-700">IA Activa</Badge>
+                <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">IA Activa</Badge>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">3</div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">3</div>
                   <div className="text-sm text-muted-foreground">Metas Activas</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">$520.000</div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">$520.000</div>
                   <div className="text-sm text-muted-foreground">Total Ahorrado</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">+18%</div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">+18%</div>
                   <div className="text-sm text-muted-foreground">Optimización IA</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">7 días</div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">7 días</div>
                   <div className="text-sm text-muted-foreground">Próxima meta</div>
                 </div>
               </div>
@@ -281,10 +280,10 @@ export function SavingsSection() {
       {activeTab === 'challenges' && (
         <div className="space-y-6">
           {/* Challenges Header */}
-          <Card className="bg-gradient-to-r from-orange-50 via-yellow-50 to-amber-50 border-orange-200">
+          <Card className="bg-gradient-to-r from-orange-50 via-yellow-50 to-amber-50 dark:from-orange-900/20 dark:via-yellow-900/20 dark:to-amber-900/20 border-orange-200 dark:border-orange-700">
             <CardContent className="p-8 text-center">
               <div className="flex justify-center items-center space-x-4 mb-4">
-                <Trophy className="w-12 h-12 text-orange-500" />
+                <Trophy className="w-12 h-12 text-orange-500 dark:text-orange-400" />
               </div>
               <h3 className="text-2xl font-semibold text-foreground mb-2">
                 Retos de Ahorro
@@ -370,18 +369,18 @@ export function SavingsSection() {
           </div>
 
           {/* Create Custom Challenge */}
-          <Card className="border-2 border-dashed border-yellow-300 hover:border-yellow-400 transition-colors cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-50">
+          <Card className="border-2 border-dashed border-yellow-300 dark:border-yellow-600 hover:border-yellow-400 dark:hover:border-yellow-500 transition-colors cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20">
             <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Plus className="w-8 h-8 text-yellow-600" />
+              <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Plus className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
               </div>
               <h3 className="font-semibold text-foreground mb-2 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-yellow-600 mr-2" />
+                <Sparkles className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-2" />
                 Crear Mi Propio Reto
               </h3>
               <p className="text-muted-foreground mb-4">Personaliza tu reto de ahorro con tu meta y duración ideales</p>
               <Button 
-                className="bg-yellow-600 hover:bg-yellow-700"
+                className="bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-700 dark:hover:bg-yellow-600"
                 onClick={() => setShowChallengeCustomizer(true)}
               >
                 <Trophy className="w-4 h-4 mr-2" />
@@ -396,63 +395,59 @@ export function SavingsSection() {
       {activeTab === 'budget' && (
         <div className="space-y-6">
           {/* Budget Management Card */}
-          <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200">
+          <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-200 dark:to-slate-300 border-indigo-200 dark:border-slate-400">
             <CardContent className="p-8">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center">
-                    <Calculator className="w-8 h-8 text-indigo-600" />
+                  <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-200 rounded-full flex items-center justify-center">
+                    <Calculator className="w-8 h-8 text-indigo-600 dark:text-indigo-700" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-gray-900">Gestión de Presupuesto</h3>
-                    <p className="text-gray-600">Organiza y optimiza tu presupuesto de manera inteligente</p>
+                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-900">Gestión de Presupuesto</h3>
+                    <p className="text-gray-600 dark:text-gray-700">Organiza y optimiza tu presupuesto de manera inteligente</p>
                   </div>
                 </div>
                 <div className="text-center space-y-3">
-                  <Badge className="bg-indigo-100 text-indigo-700 block">
-                    📊 Gestión Activa
-                  </Badge>
                   <Button 
                     onClick={() => setShowBudgetOrganizer(true)}
-                    className="bg-purple-600 hover:bg-purple-700"
+                    className="bg-purple-600 hover:bg-purple-700 dark:bg-blue-600 dark:hover:bg-blue-700"
                     size="lg"
                   >
                     <Settings className="w-5 h-5 mr-2" />
                     Organizar Presupuesto
                   </Button>
-                  <div className="text-sm text-gray-600">Siempre disponible</div>
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-white p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-900">$45,000</div>
-                  <div className="text-sm text-gray-600">Ahorro Sugerido</div>
-                  <div className="text-xs text-green-600 mt-1 flex items-center">
+                <div className="bg-card p-4 rounded-lg border border-border">
+                  <div className="text-2xl font-bold text-card-foreground">$45,000</div>
+                  <div className="text-sm text-muted-foreground">Ahorro Sugerido</div>
+                  <div className="text-xs text-green-600 dark:text-green-400 mt-1 flex items-center">
                     <TrendingUp className="w-3 h-3 mr-1" />
                     +18% optimizado
                   </div>
                 </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-900">$128,000</div>
-                  <div className="text-sm text-gray-600">Gastos Controlados</div>
-                  <div className="text-xs text-blue-600 mt-1 flex items-center">
+                <div className="bg-card p-4 rounded-lg border border-border">
+                  <div className="text-2xl font-bold text-card-foreground">$128,000</div>
+                  <div className="text-sm text-muted-foreground">Gastos Controlados</div>
+                  <div className="text-xs text-blue-600 dark:text-blue-400 mt-1 flex items-center">
                     <CheckCircle className="w-3 h-3 mr-1" />
                     Dentro del presupuesto
                   </div>
                 </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-900">94%</div>
-                  <div className="text-sm text-gray-600">Precisión</div>
-                  <div className="text-xs text-purple-600 mt-1 flex items-center">
+                <div className="bg-card p-4 rounded-lg border border-border">
+                  <div className="text-2xl font-bold text-card-foreground">94%</div>
+                  <div className="text-sm text-muted-foreground">Precisión</div>
+                  <div className="text-xs text-purple-600 dark:text-purple-400 mt-1 flex items-center">
                     <Star className="w-3 h-3 mr-1" />
                     Excelente
                   </div>
                 </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-900">12</div>
-                  <div className="text-sm text-gray-600">Ajustes este mes</div>
-                  <div className="text-xs text-orange-600 mt-1 flex items-center">
+                <div className="bg-card p-4 rounded-lg border border-border">
+                  <div className="text-2xl font-bold text-card-foreground">12</div>
+                  <div className="text-sm text-muted-foreground">Ajustes este mes</div>
+                  <div className="text-xs text-orange-600 dark:text-orange-400 mt-1 flex items-center">
                     <Settings className="w-3 h-3 mr-1" />
                     Aplicados
                   </div>
@@ -654,7 +649,7 @@ export function SavingsSection() {
                 <div className="space-y-4">
                   <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
                     <h4 className="font-medium mb-2 flex items-center">
-                      🕐 Horarios de Mayor Gasto
+                      Horarios de Mayor Gasto
                       <Calendar className="w-4 h-4 ml-2 text-purple-600" />
                     </h4>
                     <p className="text-sm text-gray-600 mb-2">
@@ -668,7 +663,7 @@ export function SavingsSection() {
                   </div>
                   <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <h4 className="font-medium mb-2 flex items-center">
-                      📍 Ubicaciones Analizadas
+                      Ubicaciones Analizadas
                       <TrendingUp className="w-4 h-4 ml-2 text-blue-600" />
                     </h4>
                     <p className="text-sm text-gray-600 mb-2">
@@ -695,7 +690,7 @@ export function SavingsSection() {
                 <div className="space-y-4">
                   <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                     <h4 className="font-medium text-green-900 mb-2 flex items-center">
-                      🎯 Meta en Progreso
+                      Meta en Progreso
                       <CheckCircle className="w-4 h-4 ml-2 text-green-600" />
                     </h4>
                     <p className="text-sm text-green-700 mb-2">
@@ -705,7 +700,7 @@ export function SavingsSection() {
                   </div>
                   <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
                     <h4 className="font-medium text-amber-900 mb-2 flex items-center">
-                      💡 Oportunidad Detectada
+                      Oportunidad Detectada
                       <Zap className="w-4 h-4 ml-2 text-amber-600" />
                     </h4>
                     <p className="text-sm text-amber-700 mb-2">
@@ -745,7 +740,7 @@ export function SavingsSection() {
                     <TrendingUp className="w-4 h-4 text-purple-600" />
                   </div>
                   <p className="text-sm text-gray-600">Rendimiento mensual</p>
-                  <div className="text-xs text-purple-600 mt-1">📈 +23% vs mes anterior</div>
+                  <div className="text-xs text-purple-600 mt-1">+23% vs mes anterior</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg border">
                   <div className="flex items-center justify-between mb-2">
@@ -753,7 +748,7 @@ export function SavingsSection() {
                     <Star className="w-4 h-4 text-blue-600" />
                   </div>
                   <p className="text-sm text-gray-600">Oportunidades disponibles</p>
-                  <div className="text-xs text-blue-600 mt-1">🎯 2 sugerencias pendientes</div>
+                  <div className="text-xs text-blue-600 mt-1">2 sugerencias pendientes</div>
                 </div>
               </div>
             </CardContent>

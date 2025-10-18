@@ -245,7 +245,7 @@ export function ContributeModal({ isOpen, onClose, goal, onContribute }: Contrib
                   <div className="mt-3">
                     <Badge className="bg-green-100 text-green-700">
                       <Check className="w-3 h-3 mr-1" />
-                      ¡Felicitaciones! Meta completada 🎉
+                      ¡Felicitaciones! Meta completada
                     </Badge>
                   </div>
                 )}

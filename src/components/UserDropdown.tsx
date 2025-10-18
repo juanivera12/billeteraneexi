@@ -10,14 +10,17 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
 import { Badge } from './ui/badge';
 import { Switch } from './ui/switch';
-import { User, CreditCard, Moon, Sun, Copy, Check } from 'lucide-react';
+import { User, CreditCard, Moon, Sun, Copy, Check, LogOut } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 interface UserDropdownProps {
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
+  onLogout: () => void;
 }
 
-export function UserDropdown({ isDarkMode, onToggleDarkMode }: UserDropdownProps) {
+export function UserDropdown({ isDarkMode, onToggleDarkMode, onLogout }: UserDropdownProps) {
+  const { user } = useAuth();
   const [showCVUModal, setShowCVUModal] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
@@ -50,8 +53,8 @@ export function UserDropdown({ isDarkMode, onToggleDarkMode }: UserDropdownProps
         
         <DropdownMenuContent align="end" className="w-56">
           <div className="px-2 py-1.5">
-            <p className="text-sm font-medium">Neexa Usuario</p>
-            <p className="text-xs text-gray-500">usuario@neexa.com</p>
+            <p className="text-sm font-medium">{user?.first_name ? `${user.first_name} ${user.last_name}` : 'Neexa Usuario'}</p>
+            <p className="text-xs text-gray-500">{user?.email || 'usuario@neexa.com'}</p>
           </div>
           
           <DropdownMenuSeparator />
@@ -78,6 +81,16 @@ export function UserDropdown({ isDarkMode, onToggleDarkMode }: UserDropdownProps
               onCheckedChange={onToggleDarkMode}
               className="ml-2" 
             />
+          </DropdownMenuItem>
+          
+          <DropdownMenuSeparator />
+          
+          <DropdownMenuItem 
+            onClick={onLogout}
+            className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 focus:text-red-700 focus:bg-red-50 dark:focus:bg-red-900/20"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Cerrar Sesión
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -167,7 +180,7 @@ export function UserDropdown({ isDarkMode, onToggleDarkMode }: UserDropdownProps
 
             {/* Instructions */}
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <h4 className="font-medium text-blue-900 mb-2">💡 Instrucciones</h4>
+              <h4 className="font-medium text-blue-900 mb-2">Instrucciones</h4>
               <ul className="text-sm text-blue-700 space-y-1">
                 <li>• Comparte tu CBU para transferencias desde otros bancos</li>
                 <li>• Usa tu ALIAS para transferencias más fáciles</li>
