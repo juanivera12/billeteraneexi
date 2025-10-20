@@ -162,7 +162,7 @@ export function CreateGoalModal({ isOpen, onClose, onCreateGoal }: CreateGoalMod
                   </div>
                   <div className="text-left">
                     <h3 className="font-medium text-gray-900">Meta Inteligente</h3>
-                    <p className="text-sm text-gray-600">Sugerencias personalizadas con IA</p>
+                    <p className="text-sm text-gray-600">Sugerencias personalizadas con NEEXA</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">

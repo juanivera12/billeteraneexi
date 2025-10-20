@@ -374,7 +374,7 @@ export function BudgetOrganizer({ onClose }: BudgetOrganizerProps) {
               <CardContent className="p-4">
                 <h4 className="font-semibold text-purple-900 mb-3 flex items-center">
                   <Brain className="w-5 h-5 mr-2" />
-                  Recomendaciones de la IA
+                  Recomendaciones de NEEXA
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="bg-white p-3 rounded border border-purple-200">

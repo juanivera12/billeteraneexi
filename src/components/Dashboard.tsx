@@ -121,7 +121,7 @@ export function Dashboard() {
             ¿Listo para comenzar a ahorrar?
           </h3>
           <p className="text-gray-600 dark:text-gray-700 mb-4">
-            Descubre nuestras herramientas de ahorro inteligente con IA
+            Descubre nuestras herramientas de ahorro inteligente con NEEXA
           </p>
           <Button className="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600">
             Explorar Ahorros

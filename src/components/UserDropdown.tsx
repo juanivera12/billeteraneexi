@@ -52,12 +52,6 @@ export function UserDropdown({ isDarkMode, onToggleDarkMode, onLogout }: UserDro
         </DropdownMenuTrigger>
         
         <DropdownMenuContent align="end" className="w-56">
-          <div className="px-2 py-1.5">
-            <p className="text-sm font-medium">{user?.first_name ? `${user.first_name} ${user.last_name}` : 'Neexa Usuario'}</p>
-            <p className="text-xs text-gray-500">{user?.email || 'usuario@neexa.com'}</p>
-          </div>
-          
-          <DropdownMenuSeparator />
           
           <DropdownMenuItem onClick={() => setShowCVUModal(true)}>
             <CreditCard className="w-4 h-4 mr-2" />
@@ -109,9 +103,6 @@ export function UserDropdown({ isDarkMode, onToggleDarkMode, onLogout }: UserDro
           </DialogHeader>
           
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">
-              Utiliza estos datos para recibir transferencias en tu cuenta Neexa
-            </p>
             
             {/* CBU */}
             <div className="space-y-2">
